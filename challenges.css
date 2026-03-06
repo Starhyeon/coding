@@ -1,0 +1,358 @@
+/* ═══════════════════════════════════════
+   CHALLENGES — Interactive Code Editor
+   ═══════════════════════════════════════ */
+
+/* ── CHALLENGE CARD ── */
+.challenge-block {
+  margin-top: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border-b);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.challenge-header {
+  padding: 1rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.challenge-label {
+  display: flex; align-items: center; gap: 10px;
+}
+
+.challenge-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+}
+
+.challenge-icon.ci-hatch { background: rgba(255,122,61,0.15); color: var(--hatch); }
+.challenge-icon.ci-python { background: rgba(30,232,130,0.15); color: var(--python); }
+.challenge-icon.ci-java { background: rgba(124,124,255,0.15); color: var(--java); }
+
+.challenge-tag {
+  font-family: var(--f-mono); font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+}
+
+.challenge-difficulty {
+  font-family: var(--f-mono); font-size: 0.58rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 100px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.cd-easy { background: rgba(30,232,130,0.1); color: var(--python); }
+.cd-medium { background: rgba(255,122,61,0.1); color: var(--hatch); }
+.cd-hard { background: rgba(255,48,88,0.1); color: var(--hack); }
+
+/* ── CHALLENGE BODY ── */
+.challenge-body { padding: 1.5rem; }
+
+.challenge-prompt {
+  font-size: 0.92rem; line-height: 1.75;
+  color: var(--white); margin-bottom: 1.25rem;
+}
+
+.challenge-prompt strong { color: var(--white); }
+.challenge-prompt code {
+  font-family: var(--f-mono); font-size: 0.82rem;
+  background: var(--raised); padding: 2px 6px;
+  border-radius: 4px; color: var(--python);
+}
+
+/* ── EXPECTED OUTPUT ── */
+.expected-output {
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--f-mono); font-size: 0.78rem;
+  color: var(--white-d);
+}
+
+.expected-label {
+  font-size: 0.58rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: var(--gray); margin-bottom: 4px;
+  display: block;
+}
+
+/* ── CODE EDITOR ── */
+.editor-wrap {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.editor-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.editor-dots {
+  display: flex; gap: 6px;
+}
+
+.editor-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+
+.editor-dot:nth-child(1) { background: #ff5f57; }
+.editor-dot:nth-child(2) { background: #febc2e; }
+.editor-dot:nth-child(3) { background: #28c840; }
+
+.editor-filename {
+  font-family: var(--f-mono); font-size: 0.65rem;
+  color: var(--gray); font-weight: 500;
+}
+
+.editor-textarea {
+  width: 100%; min-height: 160px;
+  padding: 1rem 1.25rem;
+  background: #08080d;
+  border: none; outline: none; resize: vertical;
+  font-family: var(--f-mono); font-size: 0.8rem;
+  line-height: 1.85; color: var(--white);
+  tab-size: 4;
+}
+
+.editor-textarea::placeholder {
+  color: var(--gray-d);
+}
+
+.editor-textarea:focus {
+  box-shadow: inset 0 0 0 1px var(--border-b);
+}
+
+/* ── EDITOR ACTIONS ── */
+.editor-actions {
+  display: flex; gap: 8px; align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: var(--f-mono); font-size: 0.72rem; font-weight: 700;
+  padding: 8px 18px; border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.2s var(--ease);
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+
+.btn-run {
+  background: var(--python); color: var(--void);
+  border-color: var(--python);
+}
+
+.btn-run:hover {
+  background: #19c777; transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(30,232,130,0.25);
+}
+
+.btn-hint {
+  background: transparent; color: var(--hatch);
+  border-color: rgba(255,122,61,0.3);
+}
+
+.btn-hint:hover {
+  background: rgba(255,122,61,0.08);
+  border-color: var(--hatch);
+}
+
+.btn-reset {
+  background: transparent; color: var(--gray);
+  border-color: var(--border);
+}
+
+.btn-reset:hover { color: var(--white); border-color: var(--border-b); }
+
+.btn-solution {
+  background: transparent; color: var(--gray-d);
+  border-color: var(--border);
+  margin-left: auto;
+}
+
+.btn-solution:hover { color: var(--hack); border-color: rgba(255,48,88,0.3); }
+
+/* ── OUTPUT CONSOLE ── */
+.output-console {
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: none;
+}
+
+.output-console.visible { display: block; }
+
+.console-topbar {
+  padding: 6px 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.console-label {
+  font-family: var(--f-mono); font-size: 0.58rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px; color: var(--gray);
+}
+
+.console-status {
+  font-family: var(--f-mono); font-size: 0.58rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 2px 8px; border-radius: 4px;
+}
+
+.cs-running { background: rgba(56,189,248,0.1); color: #38bdf8; }
+.cs-pass { background: rgba(30,232,130,0.15); color: var(--python); }
+.cs-fail { background: rgba(255,48,88,0.15); color: var(--hack); }
+.cs-error { background: rgba(255,122,61,0.15); color: var(--hatch); }
+
+.console-output {
+  padding: 1rem 1.25rem;
+  background: #08080d;
+  font-family: var(--f-mono); font-size: 0.78rem;
+  line-height: 1.85; color: var(--white-d);
+  min-height: 60px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.console-output .err { color: var(--hack); }
+.console-output .ok { color: var(--python); }
+.console-output .warn { color: var(--hatch); }
+
+/* ── HINT BOX ── */
+.hint-box {
+  margin-top: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,122,61,0.04);
+  border: 1px solid rgba(255,122,61,0.15);
+  border-radius: 10px;
+  display: none;
+}
+
+.hint-box.visible { display: block; }
+
+.hint-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+
+.hint-icon { font-size: 0.9rem; }
+
+.hint-label {
+  font-family: var(--f-mono); font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px; color: var(--hatch);
+}
+
+.hint-text {
+  font-size: 0.86rem; color: var(--white-d); line-height: 1.7;
+}
+
+.hint-text code {
+  font-family: var(--f-mono); font-size: 0.8rem;
+  background: var(--raised); padding: 1px 5px;
+  border-radius: 3px; color: var(--hatch);
+}
+
+/* ── SOLUTION REVEAL ── */
+.solution-box {
+  margin-top: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,48,88,0.03);
+  border: 1px solid rgba(255,48,88,0.12);
+  border-radius: 10px;
+  display: none;
+}
+
+.solution-box.visible { display: block; }
+
+.solution-label {
+  font-family: var(--f-mono); font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px; color: var(--hack);
+  margin-bottom: 6px; display: block;
+}
+
+.solution-warn {
+  font-size: 0.78rem; color: var(--gray);
+  margin-bottom: 8px; font-style: italic;
+}
+
+.solution-code {
+  background: var(--void); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem 1.25rem;
+  font-family: var(--f-mono); font-size: 0.78rem;
+  line-height: 1.85; color: var(--white-d);
+  white-space: pre-wrap;
+}
+
+/* ── CHALLENGE PROGRESS ── */
+.challenge-progress {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 1rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.progress-bar {
+  flex: 1; height: 4px; background: var(--border);
+  border-radius: 2px; overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%; border-radius: 2px;
+  background: var(--python);
+  transition: width 0.5s var(--ease);
+}
+
+.progress-text {
+  font-family: var(--f-mono); font-size: 0.6rem;
+  color: var(--gray); font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── CONCEPT CARD (before challenge) ── */
+.concept-card {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  border-left: 3px solid var(--border-b);
+}
+
+.concept-card.cc-hatch { border-left-color: var(--hatch); }
+.concept-card.cc-python { border-left-color: var(--python); }
+.concept-card.cc-java { border-left-color: var(--java); }
+
+.concept-card h4 {
+  font-family: var(--f-display); font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.concept-card p {
+  color: var(--white-d); font-size: 0.88rem; line-height: 1.75;
+  white-space: pre-line;
+}
+
+.concept-code {
+  margin-top: 8px;
+  background: var(--void); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem 1.25rem;
+  font-family: var(--f-mono); font-size: 0.78rem;
+  line-height: 1.85; color: var(--white-d);
+  white-space: pre-wrap; overflow-x: auto;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .challenge-body { padding: 1rem; }
+  .editor-actions { flex-direction: column; }
+  .btn-solution { margin-left: 0; }
+  .editor-textarea { min-height: 120px; font-size: 0.75rem; }
+}
